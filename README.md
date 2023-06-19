@@ -4,7 +4,7 @@
 
 在设置→项目结构，选择项目SDK为openjdk-19
 
-<img src="README.assets/1687183835237.png" alt="1687183835237" style="zoom:80%;" />![1687183846614](README.assets/1687183846614.png)
+<img src="README.assets/1687183835237.png" alt="1687183835237" style="zoom:80%;" />
 
 平台设置SDK选择jdk_17
 
