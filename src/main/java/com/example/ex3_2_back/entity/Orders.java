@@ -26,4 +26,13 @@ public class Orders {
 
     @OneToOne
     User user;
+
+    @Column(columnDefinition = "boolean comment '是否支付' default false")
+    Boolean isPayed;
+
+    @Column(columnDefinition = "boolean comment '是否发货' default false")
+    Boolean isDelivered;
+
+    @Column(columnDefinition = "boolean comment '是否完成' default false")
+    Boolean isFinished;
 }

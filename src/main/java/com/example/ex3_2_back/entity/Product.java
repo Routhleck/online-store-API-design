@@ -31,7 +31,10 @@ public class Product {
     @Column(columnDefinition = "varchar(255) comment '商品描述' default 'test'")
     String description;
 
-    @Column(columnDefinition = "int comment '商品价格' default '0'")
+    @Column(columnDefinition = "decimal comment '商品价格' default 0.0")
     @Builder.Default
     BigDecimal price = BigDecimal.ZERO;
+
+    @Column(columnDefinition = "boolean comment '是否上架' default false")
+    Boolean isList;
 }

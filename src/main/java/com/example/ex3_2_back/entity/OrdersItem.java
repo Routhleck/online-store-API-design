@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 /**
  * @program: online-store-API-design
- * @description: 购物车与商品关系类
+ * @description: 订单与商品关系类
  * @author: 20301037_Routhleck
- * @create: 2023-06-20 15:11
+ * @create: 2023-06-20 18:13
  **/
 
 @Builder
@@ -16,15 +16,16 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "CartItem")
-@Schema(description = "CartItem")
-public class CartItem {
+@Table(name = "OrdersItem")
+@Schema(description = "OrdersItem")
+public class OrdersItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
 
     @ManyToOne
-    Cart cart;
+    @JoinColumn(name="orders_id", referencedColumnName="id")
+    Orders orders;
 
     @ManyToOne
     Product product;
