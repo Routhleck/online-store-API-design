@@ -13,24 +13,35 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "t_User")
+@Table(name = "User")
 @Schema(description = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
-    @Column(unique = true, nullable = false)
-    @Schema(defaultValue = "test")
+
+    @Column(unique = true, nullable = false, columnDefinition = "varchar(255) comment '用户名' default 'test'  ")
     String name;
-    @Schema(defaultValue = "test")
+
+    @Column(nullable = false, columnDefinition = "varchar(255) comment '密码' default 'test'")
     String password;
+
+    @Column(nullable = false, columnDefinition = "integer comment '性别'")
     @Builder.Default
+    @Convert(converter = GenderConverter.class)
     Gender gender = Gender.Unknown;
+
+    @Column(nullable = false, columnDefinition = "varchar(255) comment '邮箱' default 'test@qq.com'")
     @Email
-    @Schema(defaultValue = "test@qq.com")
     String email;
-    @Schema(defaultValue = "111111111111")
+
+    @Column(nullable = false, columnDefinition = "varchar(32) comment '手机号' default '111111111111'")
     String phone;
-    @Schema(defaultValue = "test")
+
+    @Column(nullable = false, columnDefinition = "varchar(255) comment '地址' default 'test'")
     String address;
+
+    @Column(nullable = false, columnDefinition = "varchar(255) comment 'Token' default ''  ")
+    String token;
+
 }

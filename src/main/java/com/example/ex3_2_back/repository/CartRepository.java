@@ -1,0 +1,15 @@
+package com.example.ex3_2_back.repository;
+
+import com.example.ex3_2_back.entity.Cart;
+import com.example.ex3_2_back.entity.User;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
+
+@RepositoryRestResource(path = "CartRepository")
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+    @Operation(summary = "通过用户查找购物车")
+    @RestResource(path = "findByUser")
+    Cart findByUser(User user);
+}

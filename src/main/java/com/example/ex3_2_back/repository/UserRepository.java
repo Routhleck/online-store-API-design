@@ -32,4 +32,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Operation(summary = "通过用户名删除用户")
     @RestResource(path = "deleteByName")
     void deleteByName(String name);
+
+    @Operation(summary = "通过令牌查找用户")
+    @RestResource(path = "findByToken")
+    Optional<User> findByToken(String token);
 }
