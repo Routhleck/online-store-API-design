@@ -2,6 +2,8 @@ package com.example.ex3_2_back.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Proxy;
+
 /**
  * @program: online-store-API-design
  * @description: 购物车与商品关系类
@@ -18,6 +20,7 @@ import lombok.*;
 @Entity
 @Table(name = "CartItem")
 @Schema(description = "CartItem")
+@Proxy(lazy = false)
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

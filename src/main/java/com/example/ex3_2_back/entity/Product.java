@@ -2,6 +2,7 @@ package com.example.ex3_2_back.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Proxy;
 
 import java.math.BigDecimal;
 /**

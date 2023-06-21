@@ -2,6 +2,7 @@ package com.example.ex3_2_back.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Proxy;
 
 import java.util.List;
 /**
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "Cart")
 @Schema(description = "Cart")
+@Proxy(lazy = false)
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
