@@ -32,7 +32,7 @@ public class ProductRepositoryTests {
 
     @Test
     void findLike(){
-        productRepository.findAllByNameLike("%bb%").forEach(System.out::println);
+        productRepository.findAllByNameLike("%test%").forEach(System.out::println);
     }
 
     @Test
