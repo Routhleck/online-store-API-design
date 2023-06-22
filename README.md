@@ -1,4 +1,4 @@
-# SHITTINGME
+# README
 
 ## 项目构建
 

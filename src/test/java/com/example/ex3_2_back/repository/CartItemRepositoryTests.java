@@ -28,6 +28,12 @@ public class CartItemRepositoryTests {
     }
 
     @Test
+    void findByCartIdAndProductId(){
+        CartItem cartItem = cartItemRepository.findByCartIdAndProductId(1,1);
+        System.out.println(cartItem);
+    }
+
+    @Test
     void updateById(){
         cartItemRepository.updateById(1,3);
     }

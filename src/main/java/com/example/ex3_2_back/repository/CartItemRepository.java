@@ -15,16 +15,18 @@ import java.util.List;
 
 @RepositoryRestResource(path = "CartItemRepository")
 public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
-    @Operation(summary = "通过购物车id查找条目")
+    @Operation(summary = "通过购物车查找条目")
     @Modifying
     @Transactional
-    @Query(value = "select * from cart_item where cart_id = :cartId",nativeQuery = true)
+    @Query(value = "select * from cart_item where cart_id = :cartId", nativeQuery = true)
     @RestResource(path = "findByCartId")
     List<CartItem> findByCartId(int cartId);
 
-    @Operation(summary = "通过购物车和商品查找条目")
-    @RestResource(path = "findByCartAndProduct")
-    CartItem findByCartAndProduct(Cart cart, Product product);
+    @Operation(summary = "通过购物车id和商品id查找条目")
+    @Transactional
+    @Query(value = "select * from cart_item where cart_id = :cartId and product_id = :productId", nativeQuery = true)
+    @RestResource(path = "findByCartIdAndProductId")
+    CartItem findByCartIdAndProductId(int cartId,int productId);
 
     @Operation(summary = "通过购物车和商品添加商品")
     @Modifying

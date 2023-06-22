@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "Product")
 @Schema(description = "Product")
+@Proxy(lazy = false)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,4 +39,14 @@ public class Product {
 
     @Column(columnDefinition = "boolean comment '是否上架' default false")
     Boolean isList;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id = " + id +
+                ", name = " + name +
+                ", description = " + description +
+                ", price = " + price +
+                ", islist = " + isList + "}";
+    }
 }

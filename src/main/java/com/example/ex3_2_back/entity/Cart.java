@@ -29,6 +29,6 @@ public class Cart {
     @OneToOne
     User user;
 
-    @OneToMany(mappedBy = "cart")
-    List<CartItem> items;
+//    @OneToMany(mappedBy = "cart")
+//    List<CartItem> items;
 }

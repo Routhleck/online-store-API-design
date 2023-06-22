@@ -27,9 +27,11 @@ public class CartItem {
     Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "cart_id")
     Cart cart;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     Product product;
 
     @Column(columnDefinition = "int comment '商品数量' default 1")
