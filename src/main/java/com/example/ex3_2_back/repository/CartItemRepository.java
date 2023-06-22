@@ -36,15 +36,18 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     void insertByCartAndProduct(int cartId,int productId,int quantity);
 
     @Operation(summary = "通过id删除商品")
+    @Modifying
+    @Transactional
+    @Query(value = "delete from cart_item where cart_id = :cartId and product_id = :productId", nativeQuery = true)
     @RestResource(path = "deleteById")
-    void deleteById(int Id);
+    void deleteById(int cartId,int productId);
 
     @Operation(summary = "通过id更新商品数量")
     @Transactional
     @Modifying
-    @Query("UPDATE CartItem c set c.quantity = :quantity where c.product.id = :productId")
+    @Query("UPDATE CartItem c set c.quantity = :quantity where c.product.id = :productId and c.cart.id = :cartId")
     @RestResource(path = "updateById")
-    void updateById(int productId,int quantity);
+    void updateById(int cartId,int productId,int quantity);
 
 
 }
