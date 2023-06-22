@@ -35,4 +35,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Operation(summary = "通过商品名修改商品信息")
     @RestResource(path = "updateInfoByName")
     int updateInfoByName(String description, BigDecimal price, String name);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Product SET isList=?1 WHERE name=?2")
+    @Operation(summary = "商品上架和下架")
+    @RestResource(path = "updateIsListByName")
+    int updateIsListByName(boolean isList, String name);
+
 }

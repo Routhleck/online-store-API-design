@@ -72,4 +72,14 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/listing")
+    @Operation(summary = "商品上架和下架", description = "商品上架和下架")
+    public Result listing(@RequestParam("isList") boolean isList, @RequestParam("name") String name){
+        try {
+            productRepository.updateIsListByName(isList,name);
+            return Result.success();
+        }catch (Exception e){
+            return Result.error(e.getMessage()).addErrors(e);
+        }
+    }
 }
