@@ -29,6 +29,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @RestResource(path = "findAllByNameLike")
     List<Product> findAllByNameLike(String name);
 
+    @Operation(summary = "是否存在名字")
+    @RestResource(path = "existsByName")
+    boolean existsByName(String name);
+
+    @Operation(summary = "是否含有名字")
+    @RestResource(path = "existsByNameLike")
+    boolean existsByNameLike(String name);
+
     @Transactional
     @Modifying
     @Query("UPDATE Product SET description=?1 , price=?2 WHERE name=?3")
