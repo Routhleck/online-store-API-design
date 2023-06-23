@@ -1,16 +1,11 @@
 package com.example.ex3_2_back.entity;
+
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Proxy;
 
-import java.util.List;
-/**
- * @program: online-store-API-design
- * @description: 购物车类
- * @author: 20301037_Routhleck
- * @create: 2023-06-20 15:06
- **/
 @Builder
 @Setter
 @Getter
@@ -18,17 +13,14 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "cart")
-@Schema(description = "Cart")
+@Table(name = "shop")
+@Schema(description = "Shop")
 @Proxy(lazy = false)
-public class Cart {
+public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
 
-    @OneToOne
-    User user;
-
-    @OneToOne
-    CartItem items;
+    @Column(columnDefinition = "varchar(255) comment '店铺名称' default 'test'")
+    String shopName;
 }

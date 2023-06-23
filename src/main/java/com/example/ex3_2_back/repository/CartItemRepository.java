@@ -12,6 +12,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
+import java.util.Map;
 
 @RepositoryRestResource(path = "CartItemRepository")
 public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
@@ -49,5 +50,11 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @RestResource(path = "updateById")
     void updateById(int cartId,int productId,int quantity);
 
+
+    @Operation(summary = "通过用户id查找购物车中的商品")
+    @Transactional
+    @Query(value = "select ci.quantity, ci.product_id from cart_item ci where ci.cart_id = (select c.id from cart c where c.user_id = :userId)", nativeQuery = true)
+    @RestResource(path = "findByUserId")
+    List<Map<String, Object>> findQuantityAndProductIdByUserId(int userId);
 
 }

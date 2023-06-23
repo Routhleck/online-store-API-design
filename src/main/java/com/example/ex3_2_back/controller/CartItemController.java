@@ -2,10 +2,14 @@ package com.example.ex3_2_back.controller;
 
 import com.example.ex3_2_back.domain.Result;
 import com.example.ex3_2_back.entity.CartItem;
+import com.example.ex3_2_back.entity.Product;
 import com.example.ex3_2_back.repository.CartItemRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cartItem")
@@ -18,11 +22,22 @@ public class CartItemController {
         this.cartItemRepository = cartItemRepository;
     }
 
-    @GetMapping("/findById")
-    @Operation(summary = "展示购物车商品列表",description = "展示购物车商品列表")
-    public Result findById(@RequestParam("cartId") int cartId){
-        return Result.success(cartItemRepository.findByCartId(cartId));
+    @GetMapping("/findByUserId")
+    @Operation(summary = "通过用户ID展示购物车商品列表",description = "通过用户ID展示购物车商品列表")
+    public Result findByUserId(@RequestParam("userId") int userId){
+        List<Map<String, Object>> cartItems = cartItemRepository.findQuantityAndProductIdByUserId(userId);
+        // 判断是否为空
+        if(cartItems.isEmpty()){
+            return Result.error("购物车为空");
+        }
+        return Result.success(cartItemRepository.findQuantityAndProductIdByUserId(userId));
     }
+
+//    @GetMapping("/findById")
+//    @Operation(summary = "展示购物车商品列表",description = "展示购物车商品列表")
+//    public Result findById(@RequestParam("cartId") int cartId){
+//        return Result.success(cartItemRepository.findByCartId(cartId));
+//    }
 
     @GetMapping("/findOne")
     @Operation(summary = "根据购物车id和商品id查看信息",description = "根据购物车id和商品id查看信息")

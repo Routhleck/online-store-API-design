@@ -2,6 +2,7 @@ package com.example.ex3_2_back.controller;
 
 import com.example.ex3_2_back.entity.User;
 import com.example.ex3_2_back.domain.Result;
+import com.example.ex3_2_back.repository.CartRepository;
 import com.example.ex3_2_back.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
     private UserRepository userRepository;
+    private CartRepository cartRepository;
 
     @Autowired
     @Operation(summary = "setUserRepository", description = "setUserRepository")
@@ -35,6 +37,8 @@ public class UserController {
     public Result create(@RequestBody User user) {
         try {
             userRepository.save(user);
+            // 为用户创建对应购物车id的cart
+            cartRepository.insertByUserId(user.getId());
             return Result.success();
         } catch (Exception e) {
             return Result.error(e.getMessage()).addErrors(e);

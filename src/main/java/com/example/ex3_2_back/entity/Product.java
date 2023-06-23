@@ -40,6 +40,12 @@ public class Product {
     @Column(columnDefinition = "boolean comment '是否上架' default false")
     Boolean isList;
 
+    @OneToOne
+    Shop shop;
+
+    @OneToOne
+    Category category;
+
     @Override
     public String toString() {
         return "Product{" +
