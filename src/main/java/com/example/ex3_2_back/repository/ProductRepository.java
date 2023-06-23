@@ -9,9 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+import javax.swing.text.html.Option;
+
 
 @RepositoryRestResource(path = "ProductRepository")
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -19,6 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Operation(summary = "通过产品名称查找")
     @RestResource(path = "findByName")
     Optional<Product> findByName(String name);
+
 
     @Transactional
     @Operation(summary = "通过商品名删除商品")
@@ -51,4 +54,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @RestResource(path = "updateIsListByName")
     int updateIsListByName(boolean isList, String name);
 
+//    Optional<Product> findById(int id);
 }

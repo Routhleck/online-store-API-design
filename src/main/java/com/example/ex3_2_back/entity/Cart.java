@@ -2,6 +2,7 @@ package com.example.ex3_2_back.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Proxy;
 
 import java.util.List;
 /**
@@ -17,8 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Cart")
+@Table(name = "cart")
 @Schema(description = "Cart")
+@Proxy(lazy = false)
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +29,6 @@ public class Cart {
     @OneToOne
     User user;
 
-    @OneToMany(mappedBy = "cart")
-    List<CartItem> items;
+//    @OneToMany(mappedBy = "cart")
+//    List<CartItem> items;
 }

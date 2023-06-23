@@ -2,6 +2,7 @@ package com.example.ex3_2_back.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Proxy;
 
 import java.math.BigDecimal;
 /**
@@ -18,8 +19,9 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @Schema(description = "Product")
+@Proxy(lazy = false)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,4 +39,14 @@ public class Product {
 
     @Column(columnDefinition = "boolean comment '是否上架' default false")
     Boolean isList;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id = " + id +
+                ", name = " + name +
+                ", description = " + description +
+                ", price = " + price +
+                ", islist = " + isList + "}";
+    }
 }
