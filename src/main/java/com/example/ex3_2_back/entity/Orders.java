@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 @Schema(description = "Order")
 public class Orders {
     @Id

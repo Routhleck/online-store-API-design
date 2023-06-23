@@ -16,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "OrdersItem")
+@Table(name = "orders_Item")
 @Schema(description = "OrdersItem")
 public class OrdersItem {
     @Id

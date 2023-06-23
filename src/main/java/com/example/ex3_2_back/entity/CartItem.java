@@ -18,7 +18,7 @@ import org.hibernate.annotations.Proxy;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "CartItem")
+@Table(name = "cart_item")
 @Schema(description = "CartItem")
 @Proxy(lazy = false)
 public class CartItem {

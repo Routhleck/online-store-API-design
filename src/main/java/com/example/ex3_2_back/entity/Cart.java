@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Cart")
+@Table(name = "cart")
 @Schema(description = "Cart")
 @Proxy(lazy = false)
 public class Cart {

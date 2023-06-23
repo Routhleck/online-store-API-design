@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @Schema(description = "Product")
 @Proxy(lazy = false)
 public class Product {
