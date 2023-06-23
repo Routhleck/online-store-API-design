@@ -48,7 +48,6 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     void insert(String shopName);
 
     @Operation(summary = "通过商店名查找商店")
-    @Modifying
     @Transactional
     @Query(value = "select * from shop where shop_name = :s", nativeQuery = true)
     @RestResource(path = "findByShopName")

@@ -9,28 +9,51 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.util.List;
+
 @RepositoryRestResource(path = "CategoryRepository")
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-    @Operation(summary = "通过id查找分类")
-    @Modifying
+    @Operation(summary = "通过id查找商店")
     @Transactional
     @Query(value = "select * from category where id = :id", nativeQuery = true)
     @RestResource(path = "findById")
-    CategoryRepository findById(int id);
+    Category findById(int id);
 
-    @Operation(summary = "通过id删除分类")
+    @Operation(summary = "查找所有商店")
+    @Transactional
+    @Query(value = "select * from category", nativeQuery = true)
+    @RestResource(path = "findAll")
+    List<Category> findAll();
+
+    @Operation(summary = "通过id删除商店")
     @Modifying
     @Transactional
     @Query(value = "delete from category where id = :id", nativeQuery = true)
     @RestResource(path = "deleteById")
     void deleteById(int id);
 
-    @Operation(summary = "通过id更新分类")
+    @Operation(summary = "通过id更新商店")
     @Transactional
     @Modifying
     @Query("UPDATE Category s set s.categoryName = :categoryName where s.id = :id")
     @RestResource(path = "updateById")
     void updateById(int id,String categoryName);
 
+    @Operation(summary = "添加商店")
+    @Modifying
+    @Transactional
+    @Query(value="insert into category(category_name) values(:categoryName)", nativeQuery = true)
+    @RestResource(path = "insert")
+    void insert(String categoryName);
+
+    @Operation(summary = "通过商店名查找商店")
+    @Transactional
+    @Query(value = "select * from category where category_name = :categoryName", nativeQuery = true)
+    @RestResource(path = "findByCategoryName")
+    Category findByCategoryName(String categoryName);
+
+    @Operation(summary = "通过商店名判断商店是否存在")
+    @RestResource(path = "existsByCategoryName")
+    boolean existsByCategoryName(String categoryName);
 }
