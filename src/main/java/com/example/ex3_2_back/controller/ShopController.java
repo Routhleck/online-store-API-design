@@ -61,7 +61,7 @@ public class ShopController {
         }
     }
 
-    @PostMapping("/updateById")
+    @PutMapping("/updateById")
     @Operation(summary = "通过ID更新商店信息", description = "通过ID更新商店信息")
     public Result updateById(@RequestParam("id") int id,
                              @RequestParam("shopName") String shopName){

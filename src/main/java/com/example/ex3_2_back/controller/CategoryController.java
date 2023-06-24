@@ -61,7 +61,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/updateById")
+    @PutMapping("/updateById")
     @Operation(summary = "通过ID更新分类信息", description = "通过ID更新分类信息")
     public Result updateById(@RequestParam("id") int id,
                              @RequestParam("categoryName") String categoryName){
