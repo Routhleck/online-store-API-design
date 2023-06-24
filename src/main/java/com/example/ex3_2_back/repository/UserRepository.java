@@ -3,7 +3,10 @@ package com.example.ex3_2_back.repository;
 import com.example.ex3_2_back.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -36,4 +39,19 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Operation(summary = "通过令牌查找用户")
     @RestResource(path = "findByToken")
     Optional<User> findByToken(String token);
+
+    @Operation(summary = "通过id更新用户")
+    @RestResource(path = "update")
+    @Modifying
+    @Transactional
+    @Query("UPDATE User SET name = :name, gender = :gender, password = :password, phone = :phone, address = :address, email = :email, token = :token WHERE id = :id")
+    void update(int id, String name, Integer gender, String password, String phone, String address, String email, String token);
+
+
+    @Operation(summary = "重置用户id递增")
+    @RestResource(path = "resetId")
+    @Modifying
+    @Transactional
+    @Query(value = "update user_seq set next_val = 1", nativeQuery = true)
+    void resetId();
 }

@@ -26,7 +26,7 @@ public class User {
     @Column(nullable = false, columnDefinition = "varchar(255) comment '密码' default 'test'")
     String password;
 
-    @Column(nullable = false, columnDefinition = "integer comment '性别'")
+    @Column(nullable = false, columnDefinition = "integer(1) comment '性别'")
     @Builder.Default
     @Convert(converter = GenderConverter.class)
     Gender gender = Gender.Unknown;
@@ -38,7 +38,7 @@ public class User {
     @Column(nullable = false, columnDefinition = "varchar(32) comment '手机号' default '111111111111'")
     String phone;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) comment '地址' default 'test'")
+    @Column(nullable = true, columnDefinition = "varchar(255) comment '地址' default 'test'")
     String address;
 
     @Column(nullable = false, columnDefinition = "varchar(255) comment 'Token' default ''  ")

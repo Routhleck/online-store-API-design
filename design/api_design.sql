@@ -11,7 +11,7 @@
  Target Server Version : 50718 (5.7.18-cynos-log)
  File Encoding         : 65001
 
- Date: 20/06/2023 18:31:08
+ Date: 23/06/2023 23:17:14
 */
 
 SET NAMES utf8mb4;
@@ -23,9 +23,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart`  (
   `id` int(11) NOT NULL,
+  `items_id` int(11) NULL DEFAULT NULL,
   `user_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
+  INDEX `FK8e1ujtwdqwcck1t3p5jankkn7`(`items_id`) USING BTREE,
   INDEX `FKl70asp4l4w0jmbm1tqyofho4o`(`user_id`) USING BTREE,
+  CONSTRAINT `FK8e1ujtwdqwcck1t3p5jankkn7` FOREIGN KEY (`items_id`) REFERENCES `cart_item` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FKl70asp4l4w0jmbm1tqyofho4o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -70,10 +73,13 @@ CREATE TABLE `orders`  (
   `is_delivered` tinyint(1) NULL DEFAULT 0 COMMENT '是否发货',
   `is_finished` tinyint(1) NULL DEFAULT 0 COMMENT '是否完成',
   `is_payed` tinyint(1) NULL DEFAULT 0 COMMENT '是否支付',
+  `items_id` int(11) NULL DEFAULT NULL,
   `user_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
+  INDEX `FKsndt61t6w4tpbnmr3fawliqv`(`items_id`) USING BTREE,
   INDEX `FKel9kyl84ego2otj2accfd8mr7`(`user_id`) USING BTREE,
-  CONSTRAINT `FKel9kyl84ego2otj2accfd8mr7` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `FKel9kyl84ego2otj2accfd8mr7` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FKsndt61t6w4tpbnmr3fawliqv` FOREIGN KEY (`items_id`) REFERENCES `orders_item` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -118,8 +124,11 @@ CREATE TABLE `product`  (
   `is_list` tinyint(1) NULL DEFAULT 0 COMMENT '是否上架',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'test' COMMENT '商品名称',
   `price` decimal(10, 0) NULL DEFAULT 0 COMMENT '商品价格',
+  `shop_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `UK_jmivyxk9rmgysrmsqw15lqr5b`(`name`) USING BTREE
+  UNIQUE INDEX `UK_jmivyxk9rmgysrmsqw15lqr5b`(`name`) USING BTREE,
+  INDEX `FK94hgg8hlqfqfnt3dag950vm7n`(`shop_id`) USING BTREE,
+  CONSTRAINT `FK94hgg8hlqfqfnt3dag950vm7n` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -131,6 +140,24 @@ CREATE TABLE `product_seq`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for shop
+-- ----------------------------
+DROP TABLE IF EXISTS `shop`;
+CREATE TABLE `shop`  (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'test' COMMENT '店铺名称',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for shop_seq
+-- ----------------------------
+DROP TABLE IF EXISTS `shop_seq`;
+CREATE TABLE `shop_seq`  (
+  `next_val` bigint(20) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -138,7 +165,7 @@ CREATE TABLE `user`  (
   `id` int(11) NOT NULL,
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'test' COMMENT '地址',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'test@qq.com' COMMENT '邮箱',
-  `gender` int(11) NOT NULL COMMENT '性别',
+  `gender` int(1) NOT NULL COMMENT '性别',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'test' COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'test' COMMENT '密码',
   `phone` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '111111111111' COMMENT '手机号',

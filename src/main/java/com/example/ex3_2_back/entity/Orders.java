@@ -35,4 +35,5 @@ public class Orders {
 
     @Column(columnDefinition = "boolean comment '是否完成' default false")
     Boolean isFinished;
+
 }

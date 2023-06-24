@@ -12,6 +12,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.text.html.Option;
 
 
@@ -54,5 +55,28 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @RestResource(path = "updateIsListByName")
     int updateIsListByName(boolean isList, String name);
 
+    @Operation(summary = "重置id")
+    @RestResource(path = "resetId")
+    @Modifying
+    @Transactional
+    @Query(value = "update product_seq set next_val = 1", nativeQuery = true)
+    void resetId();
+
+    @Operation(summary = "通过商店id查找商品")
+    @RestResource(path = "findAllByShopId")
+    @Modifying
+    @Transactional
+    @Query(value = "select * from product where shop_id = :shopId", nativeQuery = true)
+    List<Product> findAllByShopId(int shopId);
+
+    @Operation(summary = "通过类别id查找商品")
+    @RestResource(path = "findAllByCategoryId")
+    @Modifying
+    @Transactional
+    @Query(value = "select * from product where category_id = :categoryId", nativeQuery = true)
+    List<Product> findAllByCategoryId(int categoryId);
+
+
 //    Optional<Product> findById(int id);
+
 }
