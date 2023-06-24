@@ -36,4 +36,9 @@ public interface OrdersItemRepository extends JpaRepository<OrdersItem, Integer>
     @Query(value = "update orders_item_seq set next_val = 1", nativeQuery = true)
     @RestResource(path = "resetId")
     void resetId();
+
+    @Operation(summary = "通过订单id查找订单商品详情")
+    @RestResource(path = "findDetailsByOrderId")
+    @Query("select p from Product p,OrdersItem ot where p.id=ot.product.id and ot.orders.id = :ordersId")
+    List<Object> findDetailsByOrderId(int ordersId);
 }
