@@ -73,7 +73,7 @@ public class ShopController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/new")
     @Operation(summary = "插入商店信息", description = "插入商店信息")
     public Result insert(@RequestParam("shopName") String shopName){
         if (!shopRepository.existsByShopName(shopName)){
@@ -84,6 +84,14 @@ public class ShopController {
         }else {
             return Result.error("该商店已存在");
         }
+    }
+
+    @DeleteMapping("/deleteAll")
+    @Operation(summary = "删除所有商店信息", description = "删除所有商店信息")
+    public Result deleteAll(){
+        shopRepository.deleteAll();
+        shopRepository.setShopSeqIdOne();
+        return Result.success();
     }
 
 }

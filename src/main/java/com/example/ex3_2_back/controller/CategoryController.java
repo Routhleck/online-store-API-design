@@ -73,7 +73,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/new")
     @Operation(summary = "插入分类信息", description = "插入分类信息")
     public Result insert(@RequestParam("categoryName") String categoryName){
         if (!categoryRepository.existsByCategoryName(categoryName)){
@@ -86,4 +86,11 @@ public class CategoryController {
         }
     }
 
+    @DeleteMapping("/deleteAll")
+    @Operation(summary = "删除所有分类信息", description = "删除所有分类信息")
+    public Result deleteAll(){
+        categoryRepository.deleteAll();
+        categoryRepository.setCategorySeqIdOne();
+        return Result.success();
+    }
 }

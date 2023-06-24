@@ -56,4 +56,11 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Operation(summary = "通过商店名判断商店是否存在")
     @RestResource(path = "existsByShopName")
     boolean existsByShopName(String shopName);
+
+    @Operation(summary = "将shop_seq表中的id设置为0")
+    @Modifying
+    @Transactional
+    @Query(value = "alter table shop_seq next_val = 1", nativeQuery = true)
+    @RestResource(path = "setShopSeqIdOne")
+    void setShopSeqIdOne();
 }

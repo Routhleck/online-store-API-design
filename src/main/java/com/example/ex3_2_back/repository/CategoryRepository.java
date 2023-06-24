@@ -56,4 +56,11 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Operation(summary = "通过商店名判断商店是否存在")
     @RestResource(path = "existsByCategoryName")
     boolean existsByCategoryName(String categoryName);
+
+    @Operation(summary = "将category_seq表中的id设置为0")
+    @Modifying
+    @Transactional
+    @Query(value = "alter table category_seq next_val = 1", nativeQuery = true)
+    @RestResource(path = "setCategorySeqIdOne")
+    void setCategorySeqIdOne();
 }
