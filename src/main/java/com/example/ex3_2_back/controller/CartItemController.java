@@ -82,6 +82,41 @@ public class CartItemController {
         return Result.success(cartItems);
     }
 
+    @GetMapping("/findDetailsByUserIdShopIdCategoryId")
+    @Operation(summary = "通过用户ID、商店ID、商品类别ID展示购物车商品列表",description = "通过用户ID、商店ID、商品类别ID展示购物车商品列表")
+    public Result findDetailsByUserIdShopIdCategoryId(@RequestParam("user_id") int userId,
+                                                @RequestParam("shop_id") int shopId,
+                                                @RequestParam("category_id") int categoryId){
+        Cart cart = cartRepository.findByUserId(userId);
+
+        // 判断是否为空
+        if(cart == null){
+            return Result.error("购物车为空");
+        }
+
+        Shop shop = shopRepository.findById(shopId);
+
+        // 判断是否为空
+        if(shop == null){
+            return Result.error("商家不存在");
+        }
+
+        Category category = categoryRepository.findById(categoryId);
+
+        // 判断是否为空
+        if(category == null){
+            return Result.error("商品类别不存在");
+        }
+
+        List<Object> cartItems = cartItemRepository.findDetailsByUserIdShopIdCategoryId(userId,shopId,categoryId);
+
+        // 判断是否为空
+        if(cartItems.isEmpty()){
+            return Result.error("购物车为空");
+        }
+        return Result.success(cartItems);
+    }
+
     @GetMapping("/findByUserIdShopIdCategoryId")
     @Operation(summary = "通过用户ID、商店ID、商品类别ID展示购物车商品列表",description = "通过用户ID、商店ID、商品类别ID展示购物车商品列表")
     public Result findByUserIdShopIdCategoryId(@RequestParam("user_id") int userId,
