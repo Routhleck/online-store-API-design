@@ -1,5 +1,6 @@
 package com.example.ex3_2_back.repository;
 
+import com.example.ex3_2_back.domain.Result;
 import com.example.ex3_2_back.entity.Orders;
 import com.example.ex3_2_back.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,7 +12,9 @@ import java.util.List;
 
 @RepositoryRestResource(path = "OrderRepository")
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
-    @Operation(summary = "通过用户查找订单")
-    @RestResource(path = "findByUser")
-    List<Orders> findByUser(User user);
+
+    @Operation(summary = "通过用户id查找订单")
+    @RestResource(path = "findByUserId")
+    List<Orders> findByUserId(int userId);
+
 }

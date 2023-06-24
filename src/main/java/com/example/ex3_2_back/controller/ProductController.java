@@ -64,12 +64,19 @@ public class ProductController {
     }
 
 
-    public Optional<Product> findById(@RequestParam("id") int id){
-        if (productRepository.existsById(id)){
+    public Optional<Product> findByIdRequset(@RequestParam("id") int id) {
+        if (productRepository.existsById(id)) {
             return productRepository.findById(id);
+        } else {
+            return Optional.empty();
         }
-        else {
-            return null;
+    }
+
+    public Optional<Product> findById(int id) {
+        if (productRepository.existsById(id)) {
+            return productRepository.findById(id);
+        } else {
+            return Optional.empty();
         }
     }
 

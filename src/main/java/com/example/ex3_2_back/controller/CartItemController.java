@@ -6,7 +6,6 @@ import com.example.ex3_2_back.repository.CartItemRepository;
 import com.example.ex3_2_back.repository.CategoryRepository;
 import com.example.ex3_2_back.repository.ShopRepository;
 import io.swagger.v3.oas.annotations.Operation;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -113,12 +112,12 @@ public class CartItemController {
 //        return Result.success(cartItemRepository.findByCartId(cartId));
 //    }
 
-    @GetMapping("/findOne")
-    @Operation(summary = "根据购物车id和商品id查看信息",description = "根据购物车id和商品id查看信息")
-    public Result findOne(@RequestParam("cartId") int cartId,
-                          @RequestParam("productId") int productId){
-        return Result.success(cartItemRepository.findByCartIdAndProductId(cartId,productId));
-    }
+//    @GetMapping("/findOne")
+//    @Operation(summary = "根据购物车id和商品id查看信息",description = "根据购物车id和商品id查看信息")
+//    public Result findOne(@RequestParam("cartId") int cartId,
+//                          @RequestParam("productId") int productId){
+//        return Result.success(cartItemRepository.findByCartIdAndProductId(cartId,productId));
+//    }
 
     @PostMapping("/insert")
     @Operation(summary = "向购物车内添加商品",description = "向购物车内添加商品")
@@ -179,7 +178,7 @@ public class CartItemController {
                 return Result.error("购物车不存在");
             }
 
-            Optional<Product> product = productRepository.findById(productId);
+            Optional<Product> product = productRepository.findByIdRequset(productId);
 
             // 判断是否为空
 

@@ -70,4 +70,11 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @Query(value = "delete from cart_item where cart_id = :cartId and product_id in (select id from product where category_id = :categoryId)", nativeQuery = true)
     @RestResource(path = "deleteByUserIdCategoryId")
     void deleteByIdCategoryId(Integer cartId, Integer categoryId);
+
+    @Operation(summary = "通过购物车id删除购物车中的商品")
+    @Transactional
+    @Modifying
+    @Query(value = "delete from cart_item where cart_id = :cartId", nativeQuery = true)
+    @RestResource(path = "deleteByCartId")
+    void deleteByCartId(Integer cartId);
 }
