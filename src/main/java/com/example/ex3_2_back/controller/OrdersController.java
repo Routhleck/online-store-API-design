@@ -162,4 +162,86 @@ public class OrdersController {
         ordersItemRepository.resetId();
         return Result.success("删除所有订单成功");
     }
+
+    @PutMapping("/updateIsPayed")
+    @Operation(summary = "修改订单支付状态为true", description = "修改订单支付状态为true")
+    public Result updateIsPayed(@RequestParam("orders_id") int id) {
+        Optional<Orders> orders = Optional.ofNullable(ordersRepository.findById(id));
+
+        // 判断是否为空
+        if(orders.isEmpty()){
+            return Result.error("订单不存在");
+        }
+
+        // 判断订单是否发货
+        if(orders.get().getIsDelivered()){
+            return Result.error("订单已发货，无法修改支付状态");
+        }
+
+        // 判断订单是否完成
+        if(orders.get().getIsFinished()){
+            return Result.error("订单已完成，无法修改支付状态");
+        }
+
+        // 修改订单支付状态
+        orders.get().setIsPayed(true);
+        ordersRepository.save(orders.get());
+
+        return Result.success("修改订单支付状态成功");
+    }
+
+    @PutMapping("/updateIsDelivered")
+    @Operation(summary = "修改订单发货状态为true", description = "修改订单发货状态为true")
+    public Result updateIsDelivered(@RequestParam("orders_id") int id) {
+        Optional<Orders> orders = Optional.ofNullable(ordersRepository.findById(id));
+
+        // 判断是否为空
+        if(orders.isEmpty()){
+            return Result.error("订单不存在");
+        }
+
+        // 判断订单是否支付
+        if(!orders.get().getIsPayed()){
+            return Result.error("订单未支付，无法修改发货状态");
+        }
+
+        // 判断订单是否完成
+        if(orders.get().getIsFinished()){
+            return Result.error("订单已完成，无法修改发货状态");
+        }
+
+        // 修改订单发货状态
+        orders.get().setIsDelivered(true);
+        ordersRepository.save(orders.get());
+
+        return Result.success("修改订单发货状态成功");
+    }
+
+    @PutMapping("/updateIsFinished")
+    @Operation(summary = "修改订单完成状态为true", description = "修改订单完成状态为true")
+    public Result updateIsFinished(@RequestParam("orders_id") int id) {
+        Optional<Orders> orders = Optional.ofNullable(ordersRepository.findById(id));
+
+        // 判断是否为空
+        if (orders.isEmpty()) {
+            return Result.error("订单不存在");
+        }
+
+        // 判断订单是否支付
+        if (!orders.get().getIsPayed()) {
+            return Result.error("订单未支付，无法修改完成状态");
+        }
+
+        // 判断订单是否发货
+        if (!orders.get().getIsDelivered()) {
+            return Result.error("订单未发货，无法修改完成状态");
+        }
+
+        // 修改订单完成状态
+        orders.get().setIsFinished(true);
+        ordersRepository.save(orders.get());
+
+        return Result.success("修改订单完成状态成功");
+    }
+
 }
