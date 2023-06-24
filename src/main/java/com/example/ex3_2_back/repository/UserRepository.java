@@ -44,8 +44,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @RestResource(path = "update")
     @Modifying
     @Transactional
-    @Query("UPDATE User SET name = :name, gender = :gender, password = :password, phone = :phone, address = :address, email = :email, token = :token WHERE id = :id")
-    void update(int id, String name, Integer gender, String password, String phone, String address, String email, String token);
+    @Query("UPDATE User SET name = :name, gender = :gender, password = :password, phone = :phone, address = :address, email = :email WHERE id = :id")
+    void update(int id, String name, Integer gender, String password, String phone, String address, String email);
 
 
     @Operation(summary = "重置用户id递增")
