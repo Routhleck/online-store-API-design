@@ -34,7 +34,9 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Operation(summary = "通过用户id查找购物车")
     @RestResource(path = "findByUserId")
     @Query(value = "select * from cart where user_id = :userId", nativeQuery = true)
+//    @Query("select p from Product p,CartItem ct, Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId")
     Cart findByUserId(int userId);
+
 
 
 //    Optional<Cart> findById(int id);
