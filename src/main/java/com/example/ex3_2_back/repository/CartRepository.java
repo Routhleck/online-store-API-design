@@ -31,6 +31,10 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query(value = "delete from cart where user_id = :userId", nativeQuery = true)
     void deleteByUserId(Integer userId);
 
+    @Operation(summary = "通过用户id查找购物车")
+    @RestResource(path = "findByUserId")
+    @Query(value = "select * from cart where user_id = :userId", nativeQuery = true)
+    Cart findByUserId(int userId);
 
 
 //    Optional<Cart> findById(int id);

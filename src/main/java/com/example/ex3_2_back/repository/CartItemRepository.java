@@ -19,9 +19,15 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @Operation(summary = "通过购物车查找条目")
     @Modifying
     @Transactional
-    @Query(value = "select * from cart_item where cart_id = :cartId", nativeQuery = true)
+    @Query(value = "select product_id, quantity from cart_item where cart_id = :cartId", nativeQuery = true)
     @RestResource(path = "findByCartId")
-    List<CartItem> findByCartId(int cartId);
+    List<Map<String, Object>> findByCartId(int cartId);
+
+    @Operation(summary = "通过用户id、店铺id、分类id查找购物车中的商品")
+    @Transactional
+    @Query(value = "select product_id, quantity from cart_item where cart_id = :cartId and product_id in (select id from product where shop_id = :shopId and category_id = :categoryId)", nativeQuery = true)
+    List<Map<String, Object>> findByCartIdShopIdCategoryId(int cartId, int shopId, int categoryId);
+
 
     @Operation(summary = "通过购物车id和商品id查找条目")
     @Transactional
@@ -41,25 +47,27 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @Transactional
     @Query(value = "delete from cart_item where cart_id = :cartId and product_id = :productId", nativeQuery = true)
     @RestResource(path = "deleteById")
-    void deleteById(int cartId,int productId);
+    void deleteByIdProductId(int cartId,int productId);
 
     @Operation(summary = "通过id更新商品数量")
     @Transactional
     @Modifying
     @Query("UPDATE CartItem c set c.quantity = :quantity where c.product.id = :productId and c.cart.id = :cartId")
     @RestResource(path = "updateById")
-    void updateById(int cartId,int productId,int quantity);
+    void updateByIdProductIdQuantity(int cartId,int productId,int quantity);
 
 
-    @Operation(summary = "通过用户id查找购物车中的商品")
+    @Operation(summary = "通过购物车id、店铺id删除购物车中的商品")
     @Transactional
-    @Query(value = "select ci.quantity, ci.product_id from cart_item ci where ci.cart_id = (select c.id from cart c where c.user_id = :userId)", nativeQuery = true)
-    @RestResource(path = "findByUserId")
-    List<Map<String, Object>> findQuantityAndProductIdByUserId(int userId);
+    @Modifying
+    @Query(value = "delete from cart_item where cart_id = :cartId and product_id in (select id from product where shop_id = :shopId)", nativeQuery = true)
+    @RestResource(path = "deleteByUserIdShopId")
+    void deleteByIdShopId(Integer cartId, Integer shopId);
 
-    @Operation(summary = "通过用户id、店铺id、分类id查找购物车中的商品")
+    @Operation(summary = "通过购物车id、分类id删除购物车中的商品")
     @Transactional
-    @Query(value = "select ci.quantity, ci.product_id from cart_item ci where ci.cart_id = (select c.id from cart c where c.user_id = :userId and c.shop_id = :shopId) and ci.product_id in (select p.id from product p where p.category_id = :categoryId)", nativeQuery = true)
-    @RestResource(path = "findByUserIdShopIdCategoryId")
-    List<Map<String, Object>> findQuantityAndProductIdByUserIdShopIdCategoryId(int userId, int shopId, int categoryId);
+    @Modifying
+    @Query(value = "delete from cart_item where cart_id = :cartId and product_id in (select id from product where category_id = :categoryId)", nativeQuery = true)
+    @RestResource(path = "deleteByUserIdCategoryId")
+    void deleteByIdCategoryId(Integer cartId, Integer categoryId);
 }

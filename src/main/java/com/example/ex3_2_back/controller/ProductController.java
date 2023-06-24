@@ -9,7 +9,6 @@ import com.example.ex3_2_back.repository.ProductRepository;
 import com.example.ex3_2_back.repository.ShopRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -56,11 +55,21 @@ public class ProductController {
 
     @GetMapping("/findById")
     @Operation(summary = "通过id查询商品信息", description = "通过id查询商品信息")
-    public Result findById(@RequestParam("id") int id){
+    public Result findByIdResult(@RequestParam("id") int id){
         if (productRepository.existsById(id)){
             return Result.success(productRepository.findById(id));
         }else {
             return Result.error("未找到该商品");
+        }
+    }
+
+
+    public Optional<Product> findById(@RequestParam("id") int id){
+        if (productRepository.existsById(id)){
+            return productRepository.findById(id);
+        }
+        else {
+            return null;
         }
     }
 
@@ -239,5 +248,15 @@ public class ProductController {
         productRepository.deleteAll();
         productRepository.resetId();
         return Result.success();
+    }
+
+    @GetMapping("/findByProductId")
+    @Operation(summary = "通过商品id查询商品信息", description = "通过商品id查询商品信息")
+    public Optional<Product> findByProductId(int productId) {
+        if (productRepository.existsById(productId)) {
+            return productRepository.findById(productId);
+        } else {
+            return Optional.empty();
+        }
     }
 }
