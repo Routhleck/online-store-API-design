@@ -40,6 +40,10 @@ public class Product {
     @Column(columnDefinition = "boolean comment '是否上架' default false")
     Boolean isList;
 
+    @Column(columnDefinition = "decimal comment '商品平均评分' default 0.0")
+    @Builder.Default
+    BigDecimal rate = BigDecimal.ZERO;
+
     @OneToOne
     Shop shop;
 
