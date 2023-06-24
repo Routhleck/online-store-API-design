@@ -1,10 +1,16 @@
 package com.example.ex3_2_back.controller;
 
+import com.example.ex3_2_back.domain.Result;
+import com.example.ex3_2_back.entity.Cart;
+import com.example.ex3_2_back.entity.Orders;
+import com.example.ex3_2_back.entity.OrdersItem;
 import com.example.ex3_2_back.repository.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ordersItem")
@@ -64,6 +70,36 @@ public class OrdersItemController {
     public void setCategoryRepository(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
     }
+
+    @GetMapping("/findByOrdersId")
+    @Operation(summary = "通过订单ID展示订单商品列表",description = "通过订单ID展示订单商品列表")
+    public Result findByOrdersId(@RequestParam("orders_id") int ordersId){
+        Orders orders = ordersRepository.findById(ordersId);
+        if(orders == null){
+            return Result.error("订单不存在");
+        }
+        List<Map<String, Object>> ordersItemList = ordersItemRepository.findByOrdersId(ordersId);
+        return Result.success(ordersItemList);
+    }
+
+
+    @Operation(summary = "通过订单ID删除订单商品列表",description = "通过订单ID删除订单商品列表")
+    public Result deleteByOrdersId(@RequestParam("orders_id") int ordersId){
+        Orders orders = ordersRepository.findById(ordersId);
+        if(orders == null){
+            return Result.error("订单不存在");
+        }
+        ordersItemRepository.deleteByOrdersId(ordersId);
+        return Result.success();
+    }
+
+
+    @Operation(summary = "删除所有订单商品列表",description = "删除所有订单商品列表")
+    public Result deleteAll(){
+        ordersItemRepository.deleteAll();
+        return Result.success();
+    }
+
 
 
 

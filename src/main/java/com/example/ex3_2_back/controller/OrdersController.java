@@ -63,8 +63,21 @@ public class OrdersController {
         this.userRepository = userRepository;
     }
 
-    @Operation(summary = "通过用户id查找订单")
+
     @GetMapping("/findByUserId")
+    @Operation(summary = "通过用户ID展示订单商品列表",description = "通过用户ID展示订单商品列表")
+    public Result findByUserIdResult(@RequestParam("user_id") int userId){
+        List<Orders> orders = ordersRepository.findByUserId(userId);
+
+        if (orders.isEmpty()){
+            return Result.error("该用户没有订单");
+        }
+        else{
+            return Result.success(orders);
+        }
+    }
+
+    @Operation(summary = "通过用户id查找订单")
     public List<Orders> findByUserId(int userId) {
         return ordersRepository.findByUserId(userId);
     }
@@ -119,5 +132,34 @@ public class OrdersController {
         cartItemRepository.deleteByCartId(cart.getId());
 
         return Result.success("创建订单成功");
+    }
+
+    @DeleteMapping("/deleteById")
+    @Operation(summary = "通过订单ID删除订单", description = "通过订单ID删除订单")
+    public Result deleteById(@RequestParam("orders_id") int id) {
+        Optional<Orders> orders = Optional.ofNullable(ordersRepository.findById(id));
+
+        // 判断是否为空
+        if(orders.isEmpty()){
+            return Result.error("订单不存在");
+        }
+
+        // 删除订单商品
+        ordersItemRepository.deleteByOrdersId(id);
+
+        // 删除订单
+        ordersRepository.deleteById(id);
+
+        return Result.success("删除订单成功");
+    }
+
+    @DeleteMapping("/deleteAll")
+    @Operation(summary = "删除所有订单", description = "删除所有订单")
+    public Result deleteAll() {
+        ordersRepository.deleteAll();
+        ordersRepository.resetId();
+        ordersItemRepository.deleteAll();
+        ordersItemRepository.resetId();
+        return Result.success("删除所有订单成功");
     }
 }
