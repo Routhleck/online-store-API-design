@@ -30,7 +30,12 @@ public class MyInterceptorConfiguration implements WebMvcConfigurer {
                         "/doc.html#/**",
                         "/css/**",
                         "/webjars/**",
-                        "/ex3_2_back/swagger-ui.html"
+                        "/ex3_2_back/swagger-ui.html",
+                        "/ex3_2_back/swagger-ui.html#/**",
+                        "/ex3_2_back/swagger-resources/**",
+                        "/ex3_2_back/v2/api-docs",
+                        "/ex3_2_back/v3/api-docs",
+                        "/cartItem/**"
                 );
 
     }
