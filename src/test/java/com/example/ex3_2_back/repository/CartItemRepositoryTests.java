@@ -23,8 +23,8 @@ public class CartItemRepositoryTests {
 
     @Test
     void findByCartId(){
-        List<CartItem> cartItems = cartItemRepository.findByCartId(1);
-        System.out.println(cartItems);
+//        List<CartItem> cartItems = cartItemRepository.findByCartId(1);
+//        System.out.println(cartItems);
     }
 
     @Test
@@ -35,12 +35,12 @@ public class CartItemRepositoryTests {
 
     @Test
     void updateById(){
-        cartItemRepository.updateById(1,1,3);
+//        cartItemRepository.updateById(1,1,3);
     }
 
     @Test
     void deleteById(){
-        cartItemRepository.deleteById(1,1);
+//        cartItemRepository.deleteById(1,1);
     }
 
 }

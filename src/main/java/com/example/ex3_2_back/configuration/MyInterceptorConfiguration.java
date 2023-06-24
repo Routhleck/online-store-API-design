@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyInterceptorConfiguration implements WebMvcConfigurer {
+
     AuthInterceptor authInterceptor;
 
     @Autowired
@@ -17,9 +18,20 @@ public class MyInterceptorConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry
-//                .addInterceptor(authInterceptor)
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/auth/**", "/dev/**", "/css/**", "/favicon.ico");
+
+        registry
+                .addInterceptor(authInterceptor)
+                .addPathPatterns("/**")
+                //放行路径，不用验证token
+                .excludePathPatterns(
+                        "/auth/**",
+                        "/favicon.ico",
+                        "/doc.html",
+                        "/doc.html#/**",
+                        "/css/**",
+                        "/webjars/**",
+                        "/ex3_2_back/swagger-ui.html"
+                );
+
     }
 }
