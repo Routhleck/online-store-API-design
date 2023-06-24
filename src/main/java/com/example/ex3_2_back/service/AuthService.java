@@ -87,7 +87,6 @@ public class AuthService {
                 .email(registerDomain.getEmail())
                 .address(registerDomain.getAddress())
                 .phone(registerDomain.getPhone())
-                .token(registerDomain.getToken())
                 .build());
 
         User user = userRepository.findByName(registerDomain.getUsername())

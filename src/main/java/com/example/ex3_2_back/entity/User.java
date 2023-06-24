@@ -40,8 +40,4 @@ public class User {
 
     @Column(nullable = true, columnDefinition = "varchar(255) comment '地址' default 'test'")
     String address;
-
-    @Column(nullable = false, columnDefinition = "varchar(255) comment 'Token' default ''  ")
-    String token;
-
 }

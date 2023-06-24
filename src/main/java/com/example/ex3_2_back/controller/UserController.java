@@ -96,10 +96,9 @@ public class UserController {
                          @RequestParam("password") String password,
                          @RequestParam("phone") String phone,
                          @RequestParam("address") String address,
-                         @RequestParam("email") String email,
-                         @RequestParam("token") String token) {
+                         @RequestParam("email") String email) {
         try {
-            userRepository.update(id, name, gender, password, phone, address, email, token);
+            userRepository.update(id, name, gender, password, phone, address, email);
             return Result.success();
         } catch (Exception e) {
             return Result.error(e.getMessage()).addErrors(e);

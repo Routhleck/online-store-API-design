@@ -29,7 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @RestResource(path = "deleteByName")
     void deleteByName(String name);
 
-    @Operation(summary = "通过用户名模糊查询")
+    @Operation(summary = "通过商品名模糊查询")
     @RestResource(path = "findAllByNameLike")
     List<Product> findAllByNameLike(String name);
 
