@@ -60,7 +60,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
     @Operation(summary = "将shop_seq表中的id设置为0")
     @Modifying
     @Transactional
-    @Query(value = "alter table shop_seq next_val = 1", nativeQuery = true)
+    @Query(value = "update shop_seq set next_val = 1", nativeQuery = true)
     @RestResource(path = "setShopSeqIdOne")
     void setShopSeqIdOne();
 }
