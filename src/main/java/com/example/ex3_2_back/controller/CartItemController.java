@@ -71,6 +71,17 @@ public class CartItemController {
         return Result.success(cartItems);
     }
 
+    @GetMapping("/findDetailsByUserId")
+    @Operation(summary = "通过用户ID展示购物车商品列表",description = "通过用户ID展示购物车商品列表")
+    public Result findDetailsByUserId(@RequestParam("user_id") int userId){
+        List<Object> cartItems = cartItemRepository.findDetailsByUserId(userId);
+        // 判断是否为空
+        if(cartItems.isEmpty()){
+            return Result.error("购物车为空");
+        }
+        return Result.success(cartItems);
+    }
+
     @GetMapping("/findByUserIdShopIdCategoryId")
     @Operation(summary = "通过用户ID、商店ID、商品类别ID展示购物车商品列表",description = "通过用户ID、商店ID、商品类别ID展示购物车商品列表")
     public Result findByUserIdShopIdCategoryId(@RequestParam("user_id") int userId,
