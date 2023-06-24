@@ -30,4 +30,10 @@ public class RegisterDomain {
     private String phone;
     @Builder.Default
     private Gender gender = Gender.Unknown;
+
+    @Schema(defaultValue = "Beijing")
+    private String address;
+
+    @Schema(defaultValue = "123456")
+    private String token;
 }

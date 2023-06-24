@@ -29,6 +29,4 @@ public class Cart {
     @OneToOne
     User user;
 
-    @OneToOne
-    CartItem items;
 }

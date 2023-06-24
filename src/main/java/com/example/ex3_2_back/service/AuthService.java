@@ -4,7 +4,9 @@ import com.example.ex3_2_back.domain.DevMessage;
 import com.example.ex3_2_back.domain.Result;
 import com.example.ex3_2_back.domain.auth.LoginDomain;
 import com.example.ex3_2_back.domain.auth.RegisterDomain;
+import com.example.ex3_2_back.entity.Cart;
 import com.example.ex3_2_back.entity.User;
+import com.example.ex3_2_back.repository.CartRepository;
 import com.example.ex3_2_back.repository.UserRepository;
 import com.example.ex3_2_back.utils.MyJwtUtil;
 import jakarta.servlet.http.Cookie;
@@ -27,11 +29,18 @@ import java.util.Optional;
 public class AuthService {
     private UserRepository userRepository;
 
+    private CartRepository cartRepository;
+
     private MyJwtUtil jwtUtil;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setCartRepository(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
     }
 
     @Autowired
@@ -57,6 +66,8 @@ public class AuthService {
     @NotNull
     public Result register(@NotNull RegisterDomain registerDomain) {
 
+
+
         if (userRepository.existsByName(registerDomain.getUsername())) {
             String message = String.format("username %s already exists", registerDomain.getUsername());
             log.info(message);
@@ -74,7 +85,18 @@ public class AuthService {
                 .password(registerDomain.getPassword1())
                 .gender(registerDomain.getGender())
                 .email(registerDomain.getEmail())
+                .address(registerDomain.getAddress())
+                .phone(registerDomain.getPhone())
+                .token(registerDomain.getToken())
                 .build());
+
+        User user = userRepository.findByName(registerDomain.getUsername())
+                .orElseThrow(() -> new RuntimeException("用户不存在"));
+        Integer userId = user.getId();
+
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartRepository.save(cart);
 
         return Result.success();
     }

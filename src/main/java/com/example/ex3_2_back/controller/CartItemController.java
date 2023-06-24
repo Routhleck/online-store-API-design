@@ -30,7 +30,20 @@ public class CartItemController {
         if(cartItems.isEmpty()){
             return Result.error("购物车为空");
         }
-        return Result.success(cartItemRepository.findQuantityAndProductIdByUserId(userId));
+        return Result.success(cartItems);
+    }
+
+    @GetMapping("/findByUserIdShopIdCategoryId")
+    @Operation(summary = "通过用户ID、商店ID、商品类别ID展示购物车商品列表",description = "通过用户ID、商店ID、商品类别ID展示购物车商品列表")
+    public Result findByUserIdShopIdCategoryId(@RequestParam("userId") int userId,
+                                                @RequestParam("shopId") int shopId,
+                                                @RequestParam("categoryId") int categoryId){
+        List<Map<String, Object>> cartItems = cartItemRepository.findQuantityAndProductIdByUserIdShopIdCategoryId(userId,shopId,categoryId);
+        // 判断是否为空
+        if(cartItems.isEmpty()){
+            return Result.error("购物车为空");
+        }
+        return Result.success(cartItems);
     }
 
 //    @GetMapping("/findById")

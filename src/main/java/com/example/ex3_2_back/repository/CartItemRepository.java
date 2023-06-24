@@ -57,4 +57,9 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @RestResource(path = "findByUserId")
     List<Map<String, Object>> findQuantityAndProductIdByUserId(int userId);
 
+    @Operation(summary = "通过用户id、店铺id、分类id查找购物车中的商品")
+    @Transactional
+    @Query(value = "select ci.quantity, ci.product_id from cart_item ci where ci.cart_id = (select c.id from cart c where c.user_id = :userId and c.shop_id = :shopId) and ci.product_id in (select p.id from product p where p.category_id = :categoryId)", nativeQuery = true)
+    @RestResource(path = "findByUserIdShopIdCategoryId")
+    List<Map<String, Object>> findQuantityAndProductIdByUserIdShopIdCategoryId(int userId, int shopId, int categoryId);
 }
