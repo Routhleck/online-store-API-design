@@ -156,10 +156,10 @@ public class OrdersController {
     @DeleteMapping("/deleteAll")
     @Operation(summary = "删除所有订单", description = "删除所有订单")
     public Result deleteAll() {
-        ordersRepository.deleteAll();
-        ordersRepository.resetId();
         ordersItemRepository.deleteAll();
         ordersItemRepository.resetId();
+        ordersRepository.deleteAll();
+        ordersRepository.resetId();
         return Result.success("删除所有订单成功");
     }
 
