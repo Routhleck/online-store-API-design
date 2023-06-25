@@ -1,5 +1,6 @@
 package com.example.ex3_2_back.controller;
 
+import com.example.ex3_2_back.domain.ProductDetail;
 import com.example.ex3_2_back.domain.Result;
 import com.example.ex3_2_back.entity.Cart;
 import com.example.ex3_2_back.entity.Orders;
@@ -103,7 +104,7 @@ public class OrdersItemController {
     @GetMapping("/findDetailsByOrderId")
     @Operation(summary = "通过订单ID查找订单商品详情",description = "通过订单ID查找订单商品详情")
     public Result findDetailsByUserId(@RequestParam("orders_id") int ordersId){
-        List<Object> orderItemsDetails = ordersItemRepository.findDetailsByOrderId(ordersId);
+        List<ProductDetail> orderItemsDetails = ordersItemRepository.findDetailsByOrderId(ordersId);
         // 判断是否为空
         if(orderItemsDetails.isEmpty()){
             return Result.error("购物车为空");

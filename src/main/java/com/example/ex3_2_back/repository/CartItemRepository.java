@@ -1,5 +1,6 @@
 package com.example.ex3_2_back.repository;
 
+import com.example.ex3_2_back.domain.ProductDetail;
 import com.example.ex3_2_back.entity.Cart;
 import com.example.ex3_2_back.entity.CartItem;
 import com.example.ex3_2_back.entity.Product;
@@ -23,15 +24,15 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     @RestResource(path = "findByCartId")
     List<Map<String, Object>> findByCartId(int cartId);
 
-    @Operation(summary = "通过用户id查找购物车及详情")
-    @RestResource(path = "findDetailsByUserId")
-    @Query("select p,ct.quantity from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId")
-    List<Object> findDetailsByUserId(int userId);
+    @Operation(summary = "通过订单id查找订单商品详情")
+    @RestResource(path = "findDetailsByOrderId")
+    @Query("select new com.example.ex3_2_back.domain.ProductDetail(p ,ct.quantity) from Product p, CartItem ct where p.id=ct.product.id and ct.cart.id = :cartId")
+    List<ProductDetail> findDetailsByUserId(int cartId);
 
     @Operation(summary = "通过用户id、店铺id和类别id查找购物车及详情")
     @RestResource(path = "findDetailsByUserIdShopIdCategoryId")
-    @Query("select p,ct.quantity from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId and p.shop.id = :shopId and p.category.id = :categoryId")
-    List<Object> findDetailsByUserIdShopIdCategoryId(int userId, int shopId, int categoryId);
+    @Query("select new com.example.ex3_2_back.domain.ProductDetail(p ,ct.quantity) from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId and p.shop.id = :shopId and p.category.id = :categoryId")
+    List<ProductDetail> findDetailsByUserIdShopIdCategoryId(int userId, int shopId, int categoryId);
 
     @Operation(summary = "通过用户id、店铺id、分类id查找购物车中的商品")
     @Transactional

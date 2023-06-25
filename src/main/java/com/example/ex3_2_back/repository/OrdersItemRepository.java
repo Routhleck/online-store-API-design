@@ -1,5 +1,6 @@
 package com.example.ex3_2_back.repository;
 
+import com.example.ex3_2_back.domain.ProductDetail;
 import com.example.ex3_2_back.entity.Orders;
 import com.example.ex3_2_back.entity.OrdersItem;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +40,6 @@ public interface OrdersItemRepository extends JpaRepository<OrdersItem, Integer>
 
     @Operation(summary = "通过订单id查找订单商品详情")
     @RestResource(path = "findDetailsByOrderId")
-    @Query("select p ,ot.quantity from Product p,OrdersItem ot where p.id=ot.product.id and ot.orders.id = :ordersId")
-    List<Object> findDetailsByOrderId(int ordersId);
+    @Query("select new com.example.ex3_2_back.domain.ProductDetail(p ,ot.quantity) from Product p,OrdersItem ot where p.id=ot.product.id and ot.orders.id = :ordersId")
+    List<ProductDetail> findDetailsByOrderId(int ordersId);
 }

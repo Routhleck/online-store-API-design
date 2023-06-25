@@ -1,5 +1,6 @@
 package com.example.ex3_2_back.controller;
 
+import com.example.ex3_2_back.domain.ProductDetail;
 import com.example.ex3_2_back.domain.Result;
 import com.example.ex3_2_back.entity.*;
 import com.example.ex3_2_back.repository.CartItemRepository;
@@ -74,7 +75,7 @@ public class CartItemController {
     @GetMapping("/findDetailsByUserId")
     @Operation(summary = "通过用户ID展示购物车商品列表",description = "通过用户ID展示购物车商品列表")
     public Result findDetailsByUserId(@RequestParam("user_id") int userId){
-        List<Object> cartItems = cartItemRepository.findDetailsByUserId(userId);
+        List<ProductDetail> cartItems = cartItemRepository.findDetailsByUserId(userId);
         // 判断是否为空
         if(cartItems.isEmpty()){
             return Result.error("购物车为空");
@@ -108,7 +109,7 @@ public class CartItemController {
             return Result.error("商品类别不存在");
         }
 
-        List<Object> cartItems = cartItemRepository.findDetailsByUserIdShopIdCategoryId(userId,shopId,categoryId);
+        List<ProductDetail> cartItems = cartItemRepository.findDetailsByUserIdShopIdCategoryId(userId,shopId,categoryId);
 
         // 判断是否为空
         if(cartItems.isEmpty()){
