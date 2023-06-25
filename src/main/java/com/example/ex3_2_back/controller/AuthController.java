@@ -39,7 +39,7 @@ public class AuthController {
         return authService.login(loginDomain, response);
     }
 
-    @RequestMapping("/logout")
+    @PostMapping("/logout")
     @NotNull
     @Operation(summary = "登出",description = "登出")
     public Result logout(HttpServletResponse response) {

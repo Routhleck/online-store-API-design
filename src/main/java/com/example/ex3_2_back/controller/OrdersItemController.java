@@ -100,7 +100,16 @@ public class OrdersItemController {
         return Result.success();
     }
 
-
+    @GetMapping("/findDetailsByOrderId")
+    @Operation(summary = "通过订单ID查找订单商品详情",description = "通过订单ID查找订单商品详情")
+    public Result findDetailsByUserId(@RequestParam("orders_id") int ordersId){
+        List<Object> orderItemsDetails = ordersItemRepository.findDetailsByOrderId(ordersId);
+        // 判断是否为空
+        if(orderItemsDetails.isEmpty()){
+            return Result.error("购物车为空");
+        }
+        return Result.success(orderItemsDetails);
+    }
 
 
 }
