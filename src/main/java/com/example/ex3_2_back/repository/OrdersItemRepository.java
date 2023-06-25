@@ -39,6 +39,6 @@ public interface OrdersItemRepository extends JpaRepository<OrdersItem, Integer>
 
     @Operation(summary = "通过订单id查找订单商品详情")
     @RestResource(path = "findDetailsByOrderId")
-    @Query("select p from Product p,OrdersItem ot where p.id=ot.product.id and ot.orders.id = :ordersId")
+    @Query("select p ,ot.quantity from Product p,OrdersItem ot where p.id=ot.product.id and ot.orders.id = :ordersId")
     List<Object> findDetailsByOrderId(int ordersId);
 }

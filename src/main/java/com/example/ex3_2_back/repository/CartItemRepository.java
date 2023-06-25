@@ -25,12 +25,12 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 
     @Operation(summary = "通过用户id查找购物车及详情")
     @RestResource(path = "findDetailsByUserId")
-    @Query("select p from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId")
+    @Query("select p,ct.quantity from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId")
     List<Object> findDetailsByUserId(int userId);
 
     @Operation(summary = "通过用户id、店铺id和类别id查找购物车及详情")
     @RestResource(path = "findDetailsByUserIdShopIdCategoryId")
-    @Query("select p from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId and p.shop.id = :shopId and p.category.id = :categoryId")
+    @Query("select p,ct.quantity from Product p,CartItem ct , Cart c where p.id=ct.product.id and ct.cart.id=c.id and c.user.id = :userId and p.shop.id = :shopId and p.category.id = :categoryId")
     List<Object> findDetailsByUserIdShopIdCategoryId(int userId, int shopId, int categoryId);
 
     @Operation(summary = "通过用户id、店铺id、分类id查找购物车中的商品")
