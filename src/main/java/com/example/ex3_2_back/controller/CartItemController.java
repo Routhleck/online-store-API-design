@@ -61,7 +61,7 @@ public class CartItemController {
         Cart cart = cartRepository.findByUserId(userId);
         // 判断是否为空
         if(cart == null){
-            return Result.error("购物车为空");
+            return Result.error("用户对应购物车不存在");
         }
         List<Map<String, Object>> cartItems = cartItemRepository.findByCartId(cart.getId());
 
@@ -75,6 +75,14 @@ public class CartItemController {
     @GetMapping("/findDetailsByUserId")
     @Operation(summary = "通过用户ID展示购物车商品列表",description = "通过用户ID展示购物车商品列表")
     public Result findDetailsByUserId(@RequestParam("user_id") int userId){
+
+        Cart cart = cartRepository.findByUserId(userId);
+
+        // 判断是否为空
+        if(cart == null){
+            return Result.error("用户对应购物车不存在");
+        }
+
         List<ProductDetail> cartItems = cartItemRepository.findDetailsByUserId(userId);
         // 判断是否为空
         if(cartItems.isEmpty()){
@@ -92,7 +100,7 @@ public class CartItemController {
 
         // 判断是否为空
         if(cart == null){
-            return Result.error("购物车为空");
+            return Result.error("用户对应购物车不存在");
         }
 
         Shop shop = shopRepository.findById(shopId);
@@ -166,18 +174,6 @@ public class CartItemController {
 //        return Result.success(cartItemRepository.findByCartIdAndProductId(cartId,productId));
 //    }
 
-    @PostMapping("/insert")
-    @Operation(summary = "向购物车内添加商品",description = "向购物车内添加商品")
-    public Result insertProduct(@RequestParam("cartId") int cartId,
-                                @RequestParam("productId") int productId,
-                                @RequestParam("quantity") int quantity){
-        try{
-            cartItemRepository.insertByCartAndProduct(cartId,productId,quantity);
-            return Result.success();
-        }catch (Exception e){
-            return Result.error(e.getMessage()).addErrors(e);
-        }
-    }
 
     @PostMapping("/insertByUserIdProductIdQuantity")
     @Operation(summary = "通过用户ID, 商品ID和数量向购物车内添加商品",description = "通过用户ID, 商品ID和数量向购物车内添加商品")

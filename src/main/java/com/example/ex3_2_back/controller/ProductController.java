@@ -50,7 +50,6 @@ public class ProductController {
         }else {
             return Result.success(productRepository.findAll());
         }
-
     }
 
     @GetMapping("/findById")

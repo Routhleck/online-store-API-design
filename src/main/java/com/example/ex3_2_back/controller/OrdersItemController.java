@@ -107,7 +107,7 @@ public class OrdersItemController {
         List<ProductDetail> orderItemsDetails = ordersItemRepository.findDetailsByOrderId(ordersId);
         // 判断是否为空
         if(orderItemsDetails.isEmpty()){
-            return Result.error("购物车为空");
+            return Result.error("订单为空");
         }
         return Result.success(orderItemsDetails);
     }

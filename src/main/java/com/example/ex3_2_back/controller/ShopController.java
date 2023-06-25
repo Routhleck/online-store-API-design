@@ -27,7 +27,6 @@ public class ShopController {
         }else {
             return Result.success(shopRepository.findAll());
         }
-
     }
 
     @GetMapping("/findById")
